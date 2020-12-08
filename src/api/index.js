@@ -8,3 +8,7 @@ export const reqVerifyCode = phone =>
 //请求登录
 export const reqLogin = (phone,code) => 
 	ajax.post('/login/phone',{phone,code})
+
+//请求校验用户身份
+export const reqVerifyToken = () => 
+	ajax.post('/login/verify')

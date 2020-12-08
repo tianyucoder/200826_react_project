@@ -57,13 +57,18 @@ export default class Login extends Component {
 	login = async()=>{
 		//获取手机号，验证码
 		const {phone,verifyCode} = this.state
-		if(!(phone && verifyCode)){
-			return Toast.fail('请检查手机号或验证码格式', 2);
-		}
+		if(!(phone && verifyCode)) return Toast.fail('请检查手机号或验证码格式', 2);
 		const result = await reqLogin(phone,verifyCode)
 		const {code,message} = result
-		if(code === 20000) Toast.success('登录成功')
+		if(code === 20000) {
+			Toast.success('登录成功！')
+			this.props.history.push('/usercenter')
+		}
 		else Toast.fail(message)
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.timer)
 	}
 
 	render() {
