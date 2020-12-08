@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import routes from './config/routes'
+import {Route,Switch} from 'react-router-dom'
 import './utils/rem'
-import './App.less'
 
 export default class App extends Component {
 	render() {
 		return (
-			<div className="demo">
-				
+			<div>
+				<Switch>
+					{routes.map( routeObj => <Route key={routeObj.path} {...routeObj}/> )}
+				</Switch>
 			</div>
 		)
 	}

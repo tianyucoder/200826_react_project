@@ -1,3 +1,6 @@
+/* 
+	该文件是移动端适配器
+*/
 function adapter(){
 	//获取布局视口宽度，因为开启了理想视口，布局视口=设备横向独立像素值
 	const dpWidth = document.documentElement.clientWidth
