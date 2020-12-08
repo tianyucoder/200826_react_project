@@ -1,7 +1,7 @@
 //个人中心组件
 import React, { Component } from 'react'
 import {Toast,NavBar,Button} from 'antd-mobile'
-import {reqVerifyToken} from '../../api'
+import {reqVerifyToken,reqLogout} from '../../api'
 import './index.less'
 
 export default class UserCenter extends Component {
@@ -9,12 +9,18 @@ export default class UserCenter extends Component {
 	state = {
 		nickName:'',
 		phone:'',
-		avatar:''
+		avatar:'',
+		_id:''
+	}
+
+	logout = async()=>{
+		await reqLogout(this.state._id)
+		this.props.history.replace('/login')
 	}
 
 	async componentDidMount(){
 		const result = await reqVerifyToken()
-		const {code,message,data} = result
+		const {code,message,data,_id} = result
 		if(code !== 20000) {
 			Toast.fail(message)
 			this.props.history.replace('/login')
@@ -31,7 +37,7 @@ export default class UserCenter extends Component {
 				<NavBar mode="light">个人中心</NavBar>
 				<img className="avatar" src={avatar} alt=""/>
 				<div className="nick-name">昵称：{nickName}</div>
-				<Button type="primary">退出登录</Button>
+				<Button onTouchEnd={this.logout} type="primary">退出登录</Button>
 			</div>
 		)
 	}

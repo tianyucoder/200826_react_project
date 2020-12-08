@@ -71,6 +71,10 @@ export default class Login extends Component {
 		clearInterval(this.timer)
 	}
 
+	githubLogin = ()=>{
+		window.location.href = 'https://github.com/login/oauth/authorize?client_id=908ba7f76c6df2f6ac33'
+	}
+
 	render() {
 		const {time,canClick,phone,verifyCode} = this.state
 		return (
@@ -102,7 +106,7 @@ export default class Login extends Component {
 				<footer className="footer">
 					<span className="other">其他登录方式</span>
 					<div className="login-type">
-						<img src={github} alt=""/>
+						<img onTouchEnd={this.githubLogin} src={github} alt=""/>
 						<img src={qq} alt=""/>
 						<img src={wechat} alt=""/>
 					</div>	

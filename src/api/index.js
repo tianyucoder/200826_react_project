@@ -12,3 +12,7 @@ export const reqLogin = (phone,code) =>
 //请求校验用户身份
 export const reqVerifyToken = () => 
 	ajax.post('/login/verify')
+
+//请求校验用户身份
+export const reqLogout = (_id) => 
+	ajax.post('/logout',{_id})
