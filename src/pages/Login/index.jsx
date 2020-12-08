@@ -29,8 +29,9 @@ export default class Login extends Component {
 
 	//获取验证码的回调
 	getVerifyCode = ()=>{
-		//获取手机号
+		//获取手机号、按钮状态
 		const {phone,canClick} = this.state
+		//如果按钮不可点击，终止逻辑
 		if(!canClick) return
 		//校验手机号
 		if(!phone) return Toast.fail('手机号格式不合法', 1);
@@ -43,8 +44,7 @@ export default class Login extends Component {
 			//若倒计时结束
 			if(time <= 0){
 				clearInterval(this.timer)
-				this.setState({canClick:true,time:10})
-				return 
+				return this.setState({canClick:true,time:10})
 			}
 			this.setState({time})
 		},1000)
@@ -61,8 +61,10 @@ export default class Login extends Component {
 			<div className="login">
 				{/* 顶部导航区 */}
 				<NavBar mode="light">手机验证码登录</NavBar>
+
 				{/* 手机验证码输入框 */}
 				<InputItem onChange={this.saveData('phone')} clear placeholder="请输入手机号"/>
+
 				{/* 验证码输入框 */}
 				<div className="verify-input">
 					<InputItem onChange={this.saveData('verifyCode')}  clear placeholder="请输入验证码"/>
@@ -72,8 +74,10 @@ export default class Login extends Component {
 						onTouchEnd={this.getVerifyCode}
 					>获取验证码{canClick ? '' : `(${time})`}</button>
 				</div>
+				
 				{/* 登录按钮 */}
 				<Button type="primary">登录</Button>
+				
 				{/* 底部其他登录方式区 */}
 				<footer className="footer">
 					<span className="other">其他登录方式</span>
