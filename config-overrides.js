@@ -1,4 +1,4 @@
-const { override, fixBabelImports,addLessLoader } = require('customize-cra');
+const { override, fixBabelImports,addLessLoader,addPostcssPlugins } = require('customize-cra');
 module.exports = override(
 	  fixBabelImports('import', {
 	    libraryName: 'antd-mobile', //对哪个库进行按需引入
@@ -15,4 +15,9 @@ module.exports = override(
 					},
 			}
 		}),
+		addPostcssPlugins([
+			require("postcss-px2rem")({ 
+				remUnit: 37.5 //按照设计师的设计稿计算出来的根字体大小
+			})
+		])
 	);

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import {Button} from 'antd-mobile'
+import './utils/rem'
+import './App.less'
 
 export default class App extends Component {
 	render() {
 		return (
-			<div>
-				<Button>点我</Button>
-				<Button type="primary">点我</Button>
+			<div className="demo">
+				
 			</div>
 		)
 	}
