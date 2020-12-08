@@ -10,8 +10,8 @@ module.exports = override(
 				javascriptEnabled: true, //允许js更改修改antd的less文件中的变量
 				 // modifyVars: { '@primary-color': 'green' }, //antd要修改的是@primary-color
 				 modifyVars: { 
-					 "@brand-primary": "green",
-					 "@brand-primary-tap":"rgb(1, 99, 1);"
+					 "@brand-primary": "#F40700",
+					 "@brand-primary-tap":"#bd0a04"
 					},
 			}
 		}),
