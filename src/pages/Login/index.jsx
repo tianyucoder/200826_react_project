@@ -1,7 +1,7 @@
 // 登录组件
 import React, { Component } from 'react'
 import { NavBar, InputItem,Button,Toast} from 'antd-mobile';
-import axios from 'axios'
+import {reqVerifyCode,reqLogin} from '../../api'
 import github from './imgs/github.png'
 import qq from './imgs/qq.png'
 import wechat from './imgs/wechat.png'
@@ -13,7 +13,7 @@ export default class Login extends Component {
 	state = {
 		phone:'',
 		verifyCode:'',
-		time:10,
+		time:60,
 		canClick:true
 	}
 
@@ -28,7 +28,7 @@ export default class Login extends Component {
 	}
 
 	//获取验证码的回调
-	getVerifyCode = ()=>{
+	getVerifyCode = async()=>{
 		//获取手机号、按钮状态
 		const {phone,canClick} = this.state
 		//如果按钮不可点击，终止逻辑
@@ -44,19 +44,30 @@ export default class Login extends Component {
 			//若倒计时结束
 			if(time <= 0){
 				clearInterval(this.timer)
-				return this.setState({canClick:true,time:10})
+				return this.setState({canClick:true,time:60})
 			}
 			this.setState({time})
 		},1000)
 		//发送请求
-		axios.post('http://localhost:3000/login/digits',{phone}).then(
-			response => {console.log('成功了',response.data);},
-			error => {console.log('失败了',error);}
-		)
+		await reqVerifyCode(phone)
+		Toast.success('验证码发送成功')
+	}
+
+	//登录的回调
+	login = async()=>{
+		//获取手机号，验证码
+		const {phone,verifyCode} = this.state
+		if(!(phone && verifyCode)){
+			return Toast.fail('请检查手机号或验证码格式', 2);
+		}
+		const result = await reqLogin(phone,verifyCode)
+		const {code,message} = result
+		if(code === 20000) Toast.success('登录成功')
+		else Toast.fail(message)
 	}
 
 	render() {
-		const {time,canClick} = this.state
+		const {time,canClick,phone,verifyCode} = this.state
 		return (
 			<div className="login">
 				{/* 顶部导航区 */}
@@ -76,7 +87,11 @@ export default class Login extends Component {
 				</div>
 				
 				{/* 登录按钮 */}
-				<Button type="primary">登录</Button>
+				<Button
+					 onTouchEnd={this.login} 
+					 type="primary"
+					 disabled={(phone && verifyCode) ? false : true}
+				>登录</Button>
 				
 				{/* 底部其他登录方式区 */}
 				<footer className="footer">
