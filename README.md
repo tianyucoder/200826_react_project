@@ -36,7 +36,9 @@
 							style: true,//处理原文件样式
 						}),
 						addLessLoader({
-							javascriptEnabled: true, //允许js更改修改antd的less文件中的变量
-							modifyVars: { '@primary-color': 'green' },
+							lessOptions:{
+								javascriptEnabled: true, //允许js更改修改antd的less文件中的变量
+								modifyVars: { '@primary-color': 'green' },
+							}
 						}),
 					);
